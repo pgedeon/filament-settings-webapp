@@ -1,0 +1,563 @@
+/* ===================================
+   Filament Settings Web App - Compare
+   Design System + Responsive Layout
+   =================================== */
+
+:root {
+    /* Design tokens - can be overridden by theme */
+    --fsw-radius: 6px;
+    --fsw-border: 1px solid #ddd;
+    --fsw-bg: #fff;
+    --fsw-muted: #666;
+    --fsw-primary: #2271b1; /* WordPress blue */
+    --fsw-primary-hover: #135e96;
+    --fsw-diff-bg: #fff3cd; /* Subtle highlight */
+    --fsw-diff-border: #ffc107;
+    --fsw-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Base app container */
+.fsw-compare-app {
+    --theme-radius: var(--fsw-radius);
+    --theme-border: var(--fsw-border);
+    --theme-bg: var(--fsw-bg);
+    --theme-muted: var(--fsw-muted);
+    --theme-primary: var(--fsw-primary);
+    --theme-diff-bg: var(--fsw-diff-bg);
+
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    margin: 1.5em 0;
+    padding: 1.25em;
+    background: var(--theme-bg);
+    border: var(--theme-border);
+    border-radius: var(--theme-radius);
+    box-shadow: var(--fsw-shadow);
+    max-width: 100%;
+}
+
+/* Screen reader only */
+.fsw-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ===================================
+   Picker Section
+   =================================== */
+.fsw-compare-picker {
+    margin-bottom: 1.5em;
+}
+
+/* Search input */
+.fsw-search-container {
+    position: relative;
+    margin-bottom: 1em;
+}
+
+.fsw-search-input {
+    width: 100%;
+    max-width: 500px;
+    padding: 10px 14px;
+    font-size: 1rem;
+    border: var(--theme-border);
+    border-radius: var(--theme-radius);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.fsw-search-input:focus {
+    border-color: var(--theme-primary);
+    box-shadow: 0 0 0 2px rgba(34, 113, 177, 0.25);
+}
+
+/* Typeahead dropdown */
+.fsw-search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 300px;
+    overflow-y: auto;
+    background: var(--theme-bg);
+    border: var(--theme-border);
+    border-top: none;
+    border-radius: 0 0 var(--theme-radius) var(--theme-radius);
+    box-shadow: var(--fsw-shadow);
+    z-index: 10;
+}
+
+.fsw-typeahead-item {
+    padding: 10px 14px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    gap: 1em;
+}
+
+.fsw-typeahead-item:focus,
+.fsw-typeahead-item:hover {
+    background: #f0f0f0;
+}
+
+.fsw-maker {
+    font-weight: 600;
+    color: var(--theme-primary);
+}
+
+.fsw-model {
+    color: var(--theme-muted);
+}
+
+.fsw-no-results {
+    padding: 12px 14px;
+    color: var(--theme-muted);
+    font-style: italic;
+    text-align: center;
+}
+
+/* Filter chips */
+.fsw-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    margin-bottom: 1em;
+}
+
+.fsw-filter-chip {
+    padding: 6px 12px;
+    font-size: 0.875rem;
+    border: var(--theme-border);
+    border-radius: 999px;
+    background: var(--theme-bg);
+    color: var(--theme-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.fsw-filter-chip:hover {
+    border-color: var(--theme-primary);
+    color: var(--theme-primary);
+}
+
+.fsw-filter-chip.active {
+    background: var(--theme-primary);
+    border-color: var(--theme-primary);
+    color: #fff;
+}
+
+/* Selected tray */
+.fsw-selected-tray {
+    margin-bottom: 1em;
+    padding: 1em;
+    background: #f9f9f9;
+    border: var(--theme-border);
+    border-radius: var(--theme-radius);
+}
+
+.fsw-tray-label {
+    font-weight: 600;
+    margin-bottom: 0.5em;
+    color: var(--theme-muted);
+}
+
+.fsw-selected-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+}
+
+.fsw-selected-card {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: #e8f4fd;
+    border: 1px solid #b3d4fc;
+    border-radius: 999px;
+    font-size: 0.875rem;
+}
+
+.fsw-card-label {
+    font-weight: 500;
+}
+
+.fsw-remove-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border: none;
+    background: transparent;
+    font-size: 1.25rem;
+    line-height: 1;
+    color: #666;
+    cursor: pointer;
+    border-radius: 50%;
+    padding: 0;
+}
+
+.fsw-remove-btn:hover {
+    background: rgba(0,0,0,0.1);
+    color: #d63638;
+}
+
+/* Compare button */
+.fsw-compare-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    background: var(--theme-primary);
+    border: none;
+    border-radius: var(--theme-radius);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.fsw-compare-button:hover:not(:disabled) {
+    background: var(--theme-primary-hover);
+}
+
+.fsw-compare-button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.fsw-hint {
+    margin: 0.25em 0 0;
+    font-size: 0.875rem;
+    color: var(--theme-muted);
+}
+
+/* ===================================
+   Results Section
+   =================================== */
+.fsw-compare-results {
+    border-top: var(--theme-border);
+    padding-top: 1.5em;
+}
+
+/* Sticky header cards */
+.fsw-sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: var(--theme-bg);
+    padding: 1em;
+    margin: 0 -1.25em 1.5em;
+    border-bottom: var(--theme-border);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.fsw-header-cards {
+    display: flex;
+    gap: 1em;
+    overflow-x: auto;
+    padding-bottom: 0.5em;
+}
+
+.fsw-header-card {
+    flex: 0 0 180px;
+    padding: 1em;
+    background: #f0f6fc;
+    border: 1px solid #ddd;
+    border-radius: var(--theme-radius);
+    position: relative;
+}
+
+.fsw-card-title {
+    font-weight: 600;
+    margin-bottom: 0.5em;
+    color: var(--theme-primary);
+    padding-right: 24px;
+}
+
+.fsw-card-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.875rem;
+    color: var(--theme-muted);
+}
+
+.fsw-remove-btn-small {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    color: #999;
+    border-radius: 50%;
+    padding: 0;
+}
+
+.fsw-remove-btn-small:hover {
+    background: rgba(0,0,0,0.1);
+    color: #d63638;
+}
+
+/* Spec sections */
+.fsw-spec-section {
+    margin-bottom: 1.5em;
+    border: var(--theme-border);
+    border-radius: var(--theme-radius);
+    overflow: hidden;
+}
+
+.fsw-section-header {
+    margin: 0;
+    padding: 0.75em 1em;
+    background: #f0f0f0;
+    border-bottom: var(--theme-border);
+}
+
+.fsw-section-toggle {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.fsw-toggle-icon {
+    font-size: 0.75rem;
+}
+
+.fsw-section-content {
+    overflow-x: auto;
+}
+
+.fsw-spec-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px; /* Ensure table doesn't squish too much */
+}
+
+.fsw-spec-table th,
+.fsw-spec-table td {
+    padding: 10px 12px;
+    border-bottom: var(--theme-border);
+    text-align: left;
+    vertical-align: top;
+}
+
+.fsw-spec-table th {
+    background: #fafafa;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+}
+
+.fsw-spec-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Difference highlighting */
+.fsw-spec-table .fsw-different {
+    background: var(--theme-diff-bg);
+    border-left: 3px solid var(--fsw-diff-border);
+    padding-left: 9px; /* Adjust for border */
+}
+
+/* Use non-color indicator for accessibility */
+.fsw-spec-table .fsw-different::after {
+    content: "⚠";
+    float: right;
+    margin-left: 8px;
+    color: var(--fsw-diff-border);
+    font-weight: bold;
+}
+
+.fsw-diff-row {
+    background: rgba(255, 243, 205, 0.3) !important;
+}
+
+/* ===================================
+   Actions Bar
+   =================================== */
+.fsw-compare-actions {
+    display: flex;
+    gap: 1em;
+    margin-top: 1em;
+    padding-top: 1em;
+    border-top: var(--theme-border);
+}
+
+.fsw-action-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #1d1d1d; /* Ensure sufficient contrast against light background */
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: var(--theme-radius);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.fsw-action-button:hover {
+    background: #e0e0e0;
+}
+
+.fsw-action-button.active {
+    background: var(--theme-primary);
+    border-color: var(--theme-primary);
+    color: #fff;
+}
+
+.fsw-icon {
+    font-style: normal;
+}
+
+/* ===================================
+   Loading & Error states
+   =================================== */
+.fsw-loading,
+.fsw-error {
+    margin: 1em 0;
+    padding: 1em;
+    border-radius: var(--theme-radius);
+    text-align: center;
+}
+
+.fsw-loading {
+    background: #f0f6fc;
+    color: var(--theme-primary);
+    font-weight: 600;
+}
+
+.fsw-error {
+    background: #fcf0f0;
+    color: #d63638;
+    border: 1px solid #d63638;
+}
+
+/* ===================================
+   Mobile Responsive (< 768px)
+   =================================== */
+@media (max-width: 767px) {
+    .fsw-compare-app {
+        margin: 1em 0;
+        padding: 1em;
+        font-size: 14px;
+    }
+
+    .fsw-search-input {
+        font-size: 1rem;
+        padding: 12px;
+    }
+
+    .fsw-filters {
+        gap: 8px;
+    }
+
+    .fsw-filter-chip {
+        padding: 8px 14px;
+        font-size: 0.875rem;
+    }
+
+    .fsw-selected-card {
+        font-size: 0.875rem;
+        padding: 8px 10px;
+    }
+
+    .fsw-header-card {
+        flex: 0 0 140px;
+        padding: 0.75em;
+        font-size: 0.875rem;
+    }
+
+    .fsw-card-title {
+        font-size: 0.875rem;
+    }
+
+    .fsw-card-stats {
+        font-size: 0.75rem;
+    }
+
+    .fsw-compare-actions {
+        flex-direction: column;
+        gap: 0.75em;
+    }
+
+    .fsw-action-button {
+        justify-content: center;
+        width: 100%;
+    }
+
+    /* On mobile, table becomes scrollable with minimal styling */
+    .fsw-spec-table {
+        font-size: 0.875rem;
+    }
+
+    .fsw-spec-table th,
+    .fsw-spec-table td {
+        padding: 8px 10px;
+    }
+
+    /* Sticky first column (spec label) */
+    .fsw-spec-table th:first-child,
+    .fsw-spec-table td:first-child {
+        position: sticky;
+        left: 0;
+        background: var(--theme-bg);
+        z-index: 1;
+        font-weight: 600;
+        border-right: 1px solid #ddd;
+    }
+}
+
+/* ===================================
+   Focus styles for accessibility
+   =================================== */
+.fsw-compare-app *:focus {
+    outline: 2px solid var(--theme-primary);
+    outline-offset: 2px;
+}
+
+.fsw-compare-app button:focus:not(:focus-visible) {
+    outline: none;
+}
+
+.fsw-compare-app button:focus-visible {
+    outline: 2px solid var(--theme-primary);
+    outline-offset: 2px;
+}
+
+/* ===================================
+   Print styles
+   =================================== */
+@media print {
+    .fsw-compare-app .fsw-compare-actions,
+    .fsw-compare-app .fsw-compare-picker,
+    .fsw-sticky-header {
+        display: none !important;
+    }
+
+    .fsw-spec-section {
+        break-inside: avoid;
+    }
+}

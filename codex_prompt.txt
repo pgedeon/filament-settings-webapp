@@ -1,0 +1,40 @@
+Add a printer comparison page to the Filament Settings Web App plugin.
+
+Requirements:
+
+1) In includes/frontend.php:
+   - Add a new shortcode "printer_comparison" that calls a static method render_comparison_page().
+   - Add a method enqueue_comparison_assets() to register and enqueue compare.js and compare.css. Hook it to wp_enqueue_scripts but only when the shortcode is present. Use a static flag $compare_used set to true in render_comparison_page, and in enqueue check if the flag is true or use has_shortcode($post->post_content, "printer_comparison").
+   - The render_comparison_page() method should include a template file "templates/frontend/compare.php".
+   - Enqueue and localize script data: handle "fsw-compare", src to plugin URL + assets/compare.js, dependencies [""] (or maybe ["jquery"] if needed), version filemtime, in footer. Localize with "fswCompareData" containing ajaxUrl (rest_url("fsw/v1")) and nonce (wp_create_nonce("wp_rest")).
+
+2) Create templates/frontend/compare.php:
+   - Output container div with id "printer-comparison-app".
+   - Include a multi-select dropdown (select with multiple attribute and id "printer-select") with size 8. Options will be populated by JS.
+   - Include a button "Compare" with id "compare-btn".
+   - Include a table element (with id "comparison-table") hidden initially, to show results.
+   - Include a loading indicator (e.g., a div with class "loading" hidden).
+
+3) Create assets/compare.js:
+   - On DOMContentLoaded, fetch printer list from the REST API endpoint (fsw/v1/selectors) to populate the multi-select options. The endpoint returns {printers: [...]}.
+   - Create option elements for each printer (value = printer.id, text = maker + " " + model). Append to select.
+   - On Compare button click, get selected printer IDs.
+   - Find the full printer objects from the cached list (from the initial fetch).
+   - Generate a table: the first column is "Specification", subsequent columns are the selected printers (header with maker + model).
+   - Define an ordered list of spec fields as described in the prompt. Iterate over rows and fill cells. For booleans, display "Yes"/"No"/"—". For volume, combine X, Y, Z.
+   - Show the table, hide loading.
+   - Clear previous results on new compare.
+   - Handle errors (alert).
+
+4) Create assets/compare.css:
+   - Style the table: border-collapse, padding, border for cells, zebra striping for rows (tr:nth-child(even) background), header background bold.
+   - Wrap table in a div with overflow-x:auto for responsiveness.
+   - Style the multi-select with width 100% max-width 400px.
+   - Style the Compare button with padding, cursor.
+   - Loading indicator simple text or spinner.
+
+5) Ensure assets only load when shortcode present: In enqueue_comparison_assets, check if (isset($GLOBALS["fsw_compare_shortcode_used"]) && $GLOBALS["fsw_compare_shortcode_used"]) or better: in render, set a static flag like FSW_Frontend::$compare_used = true; then in enqueue, check if that flag is true. Only then enqueue.
+
+6) Follow existing code style.
+
+After finishing, please: openclaw system event --text "Done: Added printer comparison page with shortcode [printer_comparison]" --mode now

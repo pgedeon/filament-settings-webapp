@@ -1,0 +1,61 @@
+/* Admin Styles */
+.fsw-admin-wrap {
+    margin: 20px;
+}
+
+.fsw-admin-wrap h1 {
+    margin-bottom: 1.5rem;
+}
+
+.fsw-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.fsw-table th,
+.fsw-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.fsw-table th {
+    background: #f1f1f1;
+    font-weight: 600;
+}
+
+.fsw-table tr:nth-child(even) {
+    background: #fafafa;
+}
+
+.fsw-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.fsw-btn-primary {
+    background: #007cba;
+    color: #fff;
+}
+
+.fsw-btn-secondary {
+    background: #f0f0f0;
+    color: #333;
+}
+
+.fsw-status-active {
+    color: green;
+    font-weight: bold;
+}
+
+.fsw-status-superseded {
+    color: orange;
+}
+
+.fsw-status-rejected {
+    color: red;
+}
