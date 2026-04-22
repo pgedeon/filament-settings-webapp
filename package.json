@@ -55,7 +55,9 @@
     "node": ">=18"
   },
   "dependencies": {
+    "@lhci/cli": "^0.15.1",
     "busboy": "^1.6.0",
+    "jsdom": "^29.0.2",
     "pg": "^8.16.3"
   },
   "devDependencies": {
